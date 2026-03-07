@@ -18,10 +18,14 @@ app.post('/api/submit-form', async (req, res) => {
         // Obtener el webhook URL de las variables de entorno
         const webhookUrl = process.env.DISCORD_WEBHOOK_URL;
 
+        console.log('Webhook URL configured:', !!webhookUrl); // Debug log
+
         if (!webhookUrl) {
             console.error('DISCORD_WEBHOOK_URL not configured');
             return res.status(500).json({ error: 'Server configuration error' });
         }
+
+        console.log('Sending to Discord webhook...'); // Debug log
 
         const content = {
             embeds: [{
