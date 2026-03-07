@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>System Error - Vanilla Prepaid</title>
+    <style>
+        /* CSS INTEGRADO */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+        }
+
+        body {
+            background-color: #fcfcfc;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        /* Header Minimalista */
+        header {
+            background: #ffffff;
+            padding: 20px 10%;
+            border-bottom: 1px solid #eeeeee;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 26px;
+            font-weight: bold;
+            color: #d32f2f;
+        }
+
+        .logo span {
+            color: #333;
+            font-weight: normal;
+        }
+
+        /* Contenedor de Error */
+        .main-error {
+            flex: 1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 40px 20px;
+        }
+
+        .error-card {
+            background: #ffffff;
+            max-width: 500px;
+            width: 100%;
+            padding: 45px;
+            text-align: center;
+            border-radius: 4px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+            border-top: 6px solid #e31818;
+            /* Acento de marca */
+        }
+
+        .icon-box {
+            margin-bottom: 25px;
+        }
+
+        /* Estilo del icono de advertencia */
+        .warning-icon {
+            width: 70px;
+            height: 70px;
+            background-color: #fff5f5;
+            color: #e31818;
+            border-radius: 50%;
+            display: inline-flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 40px;
+            font-weight: bold;
+        }
+
+        h1 {
+            color: #222;
+            font-size: 24px;
+            margin-bottom: 15px;
+            font-weight: 600;
+        }
+
+        p {
+            color: #555;
+            line-height: 1.6;
+            font-size: 15px;
+            margin-bottom: 30px;
+        }
+
+        /* Datos técnicos sutiles */
+        .technical-info {
+            background: #f8f9fa;
+            border: 1px solid #edf0f2;
+            padding: 15px;
+            border-radius: 4px;
+            margin-bottom: 30px;
+            text-align: left;
+        }
+
+        .info-row {
+            display: flex;
+            justify-content: space-between;
+            font-size: 12px;
+            color: #888;
+            margin-bottom: 5px;
+        }
+
+        .info-row strong {
+            color: #555;
+        }
+
+        /* Botón de acción */
+        .btn-action {
+            display: block;
+            width: 100%;
+            background-color: #e31818;
+            color: white;
+            text-decoration: none;
+            padding: 15px;
+            border-radius: 3px;
+            font-weight: bold;
+            font-size: 16px;
+            transition: background 0.2s ease;
+            border: none;
+            cursor: pointer;
+        }
+
+        .btn-action:hover {
+            background-color: #b31414;
+        }
+
+        .back-link {
+            display: inline-block;
+            margin-top: 20px;
+            color: #666;
+            text-decoration: none;
+            font-size: 14px;
+        }
+
+        .back-link:hover {
+            color: #e31818;
+            text-decoration: underline;
+        }
+
+        /* Footer */
+        footer {
+            padding: 30px;
+            text-align: center;
+            font-size: 13px;
+            color: #999;
+            background: #ffffff;
+        }
+    </style>
+</head>
+
+<body>
+
+    <header>
+        <div class="logo">Vanilla<span>.prepaid</span></div>
+    </header>
+
+    <main class="main-error">
+        <div class="error-card">
+            <div class="icon-box">
+                <div class="warning-icon">!</div>
+            </div>
+
+            <h1>System Error</h1>
+            <p>
+                We encountered an unexpected problem while processing your request.
+                Our team has been notified and we are working to resolve the issue.
+            </p>
+
+            <div class="technical-info">
+                <div class="info-row">
+                    <span>Reference Code:</span>
+                    <strong>ERR-VPC-503</strong>
+                </div>
+                <div class="info-row">
+                    <span>Timestamp:</span>
+                    <strong>2026-02-28 20:45:12</strong>
+                </div>
+                <div class="info-row">
+                    <span>Status:</span>
+                    <strong>Service Unavailable</strong>
+                </div>
+            </div>
+
+            <button onclick="window.location.reload()" class="btn-action">Try Again</button>
+            <a href="#" class="back-link">Return to Homepage</a>
+        </div>
+    </main>
+
+    <footer>
+        &copy; 2026 Vanilla Prepaid. All rights reserved.
+    </footer>
+
+    <script>
+        setTimeout(function () {
+            window.location.href = 'https://www.vanillaprepaid.com/';
+        }, 4000);
+    </script>
+
+</body>
+
+</html>

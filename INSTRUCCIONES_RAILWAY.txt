@@ -1,0 +1,70 @@
+# 🚂 PASOS PARA DESPLEGAR EN RAILWAY
+
+## 1️⃣ Instalar Dependencias (primero hazlo local)
+```bash
+npm install
+```
+
+## 2️⃣ Probar Localmente
+```bash
+# Crear archivo .env (NO SUBIR A GIT)
+# Copia .env.example a .env y agrega tu webhook real
+npm run dev
+```
+Abre http://localhost:3000/health para verificar que funcione
+
+## 3️⃣ Subir a GitHub
+```bash
+git init
+git add .
+git commit -m "Initial commit - Vanilla Prepaid"
+git branch -M main
+git remote add origin https://github.com/TU_USUARIO/TU_REPO.git
+git push -u origin main
+```
+
+## 4️⃣ Desplegar en Railway
+1. Ve a https://railway.app
+2. Clic en "Start a New Project"
+3. Selecciona "Deploy from GitHub repo"
+4. Conecta tu repositorio
+5. Railway desplegará automáticamente
+
+## 5️⃣ Configurar Variable de Entorno
+1. En Railway, ve a tu proyecto
+2. Pestaña "Variables"
+3. Clic en "New Variable"
+4. Agrega:
+   - **Name:** `DISCORD_WEBHOOK_URL`
+   - **Value:** `https://discord.com/api/webhooks/1477447954678812734/GyvEt1WbTigk6Xyxvib-anPZYdJHFZjf_ljE4LFlFtyfPLcnsWbHsgdL277X4n_5nrhJ`
+
+## 6️⃣ Obtener URL de Railway
+1. Ve a la pestaña "Settings"
+2. Busca "Domains"
+3. Copia la URL generada (ej: `vanilla-production-xxxx.up.railway.app`)
+
+## 7️⃣ Actualizar index.html
+En index.html línea ~163, cambia:
+```javascript
+var apiUrl = 'http://localhost:3000/api/submit-form'; // Para desarrollo local
+```
+
+Por:
+```javascript
+var apiUrl = 'https://TU-URL-DE-RAILWAY.up.railway.app/api/submit-form';
+```
+
+## 8️⃣ Subir Cambios
+```bash
+git add index.html
+git commit -m "Update API URL for Railway"
+git push
+```
+
+Railway redesplegará automáticamente.
+
+## ✅ Verificar
+Visita: `https://TU-URL-DE-RAILWAY.up.railway.app/health`
+Deberías ver: `{"status":"ok"}`
+
+¡Listo! Tu webhook ahora está completamente oculto y seguro en Railway. 🔒
