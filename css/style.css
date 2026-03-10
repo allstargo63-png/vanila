@@ -1,7 +1,7 @@
 /* General Configuration */
 @font-face {
-    font-family: 'Moderat';
-    src: url('../fonts/Moderat-Regular.woff') format('woff');
+    font-family: 'ITCBerkeleyOldstyle';
+    src: url('../fonts/ITC-Berkeley-Oldstyle.woff') format('woff');
     font-weight: normal;
     font-style: normal;
     font-display: swap;
@@ -19,7 +19,7 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    font-family: 'ITCBerkeleyOldstyle', 'Moderat', serif;
+    font-family: 'ITCBerkeleyOldstyle', 'Roboto', sans-serif;
 }
 
 body {
@@ -58,7 +58,7 @@ main {
     margin-left: 20px;
     font-size: 14px;
     font-weight: bold;
-    font-family: 'Moderat', serif;
+    font-family: 'Roboto', sans-serif;
 }
 
 /* Main Red Section */
@@ -360,7 +360,7 @@ main {
     .nav-links a {
         margin-left: 12px;
         font-size: 13px;
-        font-family: 'Moderat', serif;
+        font-family: 'Roboto', sans-serif;
     }
 }
 
