@@ -1,25 +1,9 @@
 /* General Configuration */
-@font-face {
-    font-family: 'ITCBerkeleyOldstyle';
-    src: url('../fonts/ITC-Berkeley-Oldstyle.woff') format('woff');
-    font-weight: normal;
-    font-style: normal;
-    font-display: swap;
-}
-
-@font-face {
-    font-family: 'quincy-regular';
-    src: url('../fonts/ITC-Berkeley-Oldstyle.woff') format('woff');
-    font-weight: normal;
-    font-style: normal;
-    font-display: swap;
-}
-
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    font-family: 'ITCBerkeleyOldstyle', 'Roboto', sans-serif;
+    font-family: 'Roboto', sans-serif;
 }
 
 body {
@@ -28,7 +12,7 @@ body {
 }
 
 main {
-    font-family: 'quincy-regular', serif;
+    font-family: 'Roboto', sans-serif;
 }
 
 
@@ -69,13 +53,13 @@ main {
     align-items: center;
     padding: 50px 10%;
     color: white;
-    font-family: 'quincy-regular', serif;
+    font-family: 'Roboto', sans-serif;
 }
 
 /* Force primary font inside card form */
 .card-form,
 .card-form * {
-    font-family: 'quincy-regular', serif;
+    font-family: 'Roboto', sans-serif;
 }
 
 /* Where to buy cards section */

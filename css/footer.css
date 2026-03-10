@@ -1,18 +1,10 @@
 /* Footer Styles */
-@font-face {
-    font-family: 'quincy-regular';
-    src: url('../fonts/ITC-Berkeley-Oldstyle.woff') format('woff');
-    font-weight: normal;
-    font-style: normal;
-    font-display: swap;
-}
-
 .main-footer {
     background-color: #ffffff;
     /* fondo blanco */
     padding: 40px 8%;
     color: #4a4a4a;
-    font-family: 'quincy-regular', serif;
+    font-family: 'Roboto', sans-serif;
     font-size: 13px;
     line-height: 1.6;
     border-top: 4px solid #e6e6e6;
