@@ -74,6 +74,11 @@ app.post('/api/test-form', (req, res) => {
     res.json({ success: true, received: { card: card ? '***' : 'N/A', mm, aa, cvv, zip: zip ? '***' : 'N/A' } });
 });
 
+// Health check endpoint
+app.get('/health', (req, res) => {
+    res.json({ status: 'OK', message: 'Server is running' });
+});
+
 app.listen(PORT, () => {
     console.log(`Server running on port ${PORT}`);
 });
