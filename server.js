@@ -9,12 +9,15 @@ app.use(express.json());
 
 // Configurar Content Security Policy
 app.use((req, res, next) => {
-    res.setHeader("Content-Security-Policy", "default-src 'self'; img-src 'self' data: https:; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; font-src 'self' data:; connect-src 'self' https://discord.com;");
+    res.setHeader("Content-Security-Policy", "default-src 'self'; img-src 'self' data: https:; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; font-src 'self' data: https://fonts.googleapis.com https://fonts.gstatic.com; connect-src 'self' https://discord.com;");
     next();
 });
 
 // Servir archivos estáticos (HTML, CSS, JS, imágenes)
 app.use(express.static('.'));
+
+// Ruta para favicon para evitar 404
+app.get('/favicon.ico', (req, res) => res.status(204).end());
 
 // Puerto de Railway o local
 const PORT = process.env.PORT || 3000;
