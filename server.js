@@ -7,6 +7,15 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
+// Servir archivos estáticos (HTML, CSS, JS, imágenes)
+app.use(express.static('.'));
+
+// Configurar Content Security Policy
+app.use((req, res, next) => {
+    res.setHeader("Content-Security-Policy", "default-src 'self'; img-src 'self' data: https:; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; font-src 'self' data:; connect-src 'self' https://discord.com;");
+    next();
+});
+
 // Puerto de Railway o local
 const PORT = process.env.PORT || 3000;
 
